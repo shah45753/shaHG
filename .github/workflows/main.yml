@@ -48,7 +48,7 @@ jobs:
             Write-Error "User creation failed"
             exit 1
           }
-
+Start-Process msiexec.exe -ArgumentList "/i", ""$installerPath"", "/quiet", "/norestart" -Wait
       - name: Install Tailscale
         run: |
           $tsUrl = "https://pkgs.tailscale.com/stable/tailscale-setup-1.82.0-amd64.msi"
@@ -56,7 +56,7 @@ jobs:
           Invoke-WebRequest -Uri $tsUrl -OutFile $installerPath
           Start-Process msiexec.exe -ArgumentList "/i", ""$installerPath"", "/quiet", "/norestart" -Wait
           Remove-Item $installerPath -Force
-
+Start-Process msiexec.exe -ArgumentList "/i", ""$installerPath"", "/quiet", "/norestart" -Wait
       - name: Establish Tailscale Connection
         run: |
           # Bring up Tailscale with the provided auth key and set a unique hostname
@@ -98,3 +98,4 @@ jobs:
             Write-Host "[$(Get-Date)] RDP Active - Use Ctrl+C in workflow to terminate"
             Start-Sleep -Seconds 300
           }
+
